@@ -3,7 +3,7 @@ name = "zshleyp/remote"
 description = "Remote event wrapper with automatic buffering"
 license = "MIT"
 authors = ["Flipitagainpls, zshleyp"]
-version = "0.1.0"
+version = "0.1.1"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 
