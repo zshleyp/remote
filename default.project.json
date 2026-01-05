@@ -1,0 +1,6 @@
+{
+  "name": "remote",
+  "tree": {
+    "$path": "src"
+  }
+}
