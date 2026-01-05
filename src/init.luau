@@ -1,3 +1,4 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 --wally reupload by zshleyp, original author is Flipitagainpls
 
 --[[
@@ -21,6 +22,18 @@
 	events & function are sent faster and more optimized than before
 	removed buffer converter
 ]]
+
+local function Folder(name, instance)
+	local fold = Instance.new("Folder")
+	fold.Name = name
+	fold.Parent = instance
+	return fold
+end
+
+local remotes = Folder("Remotes", ReplicatedStorage)
+local events = Folder("Events", remotes)
+Folder("Functions", remotes)
+Folder("Data", events)
 
 local RemoteEvent = require(script.RemoteEvent)
 local RemoteFunction = require(script.RemoteFunction)

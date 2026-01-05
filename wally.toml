@@ -1,8 +1,8 @@
 [package]
 name = "zshleyp/remote"
-description = "Automatic remote event buffering"
+description = "Remote event wrapper with automatic buffering"
 license = "MIT"
-authors = ["Flipitagainpls"]
+authors = ["Flipitagainpls, zshleyp"]
 version = "0.1.0"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"

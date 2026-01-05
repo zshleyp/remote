@@ -8,12 +8,11 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 ---- Variables ----
 
-local utils = script.Parent.Utils
-local packages = script.Parent.Packages
+local packages = script.Parent.Parent.Packages
 local remotes = ReplicatedStorage.Remotes
 
 local Signal = require(packages.Signal)
-local Buffer = require(packages.Buffer)
+local Buffer = require(script.Parent.Buffer)
 
 local ClientProcess = require(script.ClientProcess)
 local ServerProcess = require(script.ServerProcess)
@@ -68,6 +67,7 @@ if RunService:IsClient() then
 			return self
 		else
 			RemoteEventErrorHandler("missing event (event not created)")
+			return
 		end
 	end
 
@@ -77,12 +77,13 @@ if RunService:IsClient() then
 		ClientProcess.InsertProcessQueue(self.remote, self.identifier, self.unreliable, buffed)
 	end
 else
-	function RemoteEvent.new(eventName: string, unreliable: boolean)
+	function RemoteEvent.new(eventName: string, unreliable: boolean?)
 		assert(eventName, `given value 'eventName' is missing or nil`)
 		assert(type(eventName) == "string", `given value 'eventName' is not a string`)
 
 		if remotes.Events:FindFirstChild(eventName) then
 			RemoteEventErrorHandler("EventName already used or created")
+			return
 		else
 			local self = setmetatable({}, RemoteEvent)
 
@@ -90,11 +91,11 @@ else
 				unreliable = false
 			end
 			if unreliable then
-				self.remote = utils.UnreliableEvent:Clone()
+				self.remote = Instance.new("UnreliableRemoteEvent")
 				self.remote.Parent = remotes.Events
 				self.remote.Name = eventName
 			else
-				self.remote = utils.Event:Clone()
+				self.remote = Instance.new("RemoteEvent")
 				self.remote.Parent = remotes.Events
 				self.remote.Name = eventName
 			end
@@ -114,7 +115,7 @@ else
 		end
 	end
 
-	function RemoteEvent:Fire(player: Player?, ...)
+	function RemoteEvent:Fire(player: Player, ...)
 		local packed = table.pack(...)
 		local buffed = Buffer.new(packed)
 		ServerProcess.InsertProcessQueue(player, self.remote, self.identifier, self.unreliable, buffed)

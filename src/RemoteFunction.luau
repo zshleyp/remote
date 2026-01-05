@@ -1,4 +1,4 @@
-local RemoteFunction, FunctionThreads = {}, {}
+local FunctionThreads = {}
 
 ---- Services ----
 
@@ -7,7 +7,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 ---- Modules ----
 
-local Buffer = require(script.Parent.Packages.Buffer)
+local Buffer = require(script.Parent.Buffer)
 
 ---- Variables ----
 
@@ -94,7 +94,7 @@ local constructor = {
 					FunctionThreads[name] = buffed
 				end
 			end)
-			return self :: self
+			return self :: typeof(self)
 		end
 	end,
 }
